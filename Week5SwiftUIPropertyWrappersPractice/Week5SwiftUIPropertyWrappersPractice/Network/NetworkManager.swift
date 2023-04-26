@@ -9,12 +9,10 @@ import Foundation
 // Structures concurrency
 class NetworkManager: NetworkableProtocol {
     
-    
     func getDataFromAPI(url: URL) async throws -> Data {
         
         do{
-            let (data,response) = try await URLSession.shared.data(from: url)
-            print("Response: ",response)
+            let (data,_) = try await URLSession.shared.data(from: url)
             return data
         }catch {
             throw NetworkErrorEnum.dataNotFoundError

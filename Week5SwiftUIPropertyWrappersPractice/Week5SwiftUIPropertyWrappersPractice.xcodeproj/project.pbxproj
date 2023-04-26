@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F3123E9029F7D7750047C01F /* NetworkErrorEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3123E8F29F7D7750047C01F /* NetworkErrorEnum.swift */; };
 		F3123E9229F7F7340047C01F /* PokemonListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3123E9129F7F7340047C01F /* PokemonListCell.swift */; };
+		F3123E9429F91B210047C01F /* PokemonModelViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3123E9329F91B210047C01F /* PokemonModelViewTests.swift */; };
 		F32B454E29F671BB00AA370F /* Week5SwiftUIPropertyWrappersPracticeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32B454D29F671BB00AA370F /* Week5SwiftUIPropertyWrappersPracticeApp.swift */; };
 		F32B455029F671BB00AA370F /* PokemonListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32B454F29F671BB00AA370F /* PokemonListView.swift */; };
 		F32B455229F671BD00AA370F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F32B455129F671BD00AA370F /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		F3123E8F29F7D7750047C01F /* NetworkErrorEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorEnum.swift; sourceTree = "<group>"; };
 		F3123E9129F7F7340047C01F /* PokemonListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListCell.swift; sourceTree = "<group>"; };
+		F3123E9329F91B210047C01F /* PokemonModelViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonModelViewTests.swift; sourceTree = "<group>"; };
 		F32B454A29F671BB00AA370F /* Week5SwiftUIPropertyWrappersPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Week5SwiftUIPropertyWrappersPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F32B454D29F671BB00AA370F /* Week5SwiftUIPropertyWrappersPracticeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week5SwiftUIPropertyWrappersPracticeApp.swift; sourceTree = "<group>"; };
 		F32B454F29F671BB00AA370F /* PokemonListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListView.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				F32B455E29F671BD00AA370F /* Week5SwiftUIPropertyWrappersPracticeTests.swift */,
+				F3123E9329F91B210047C01F /* PokemonModelViewTests.swift */,
 			);
 			path = Week5SwiftUIPropertyWrappersPracticeTests;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3123E9429F91B210047C01F /* PokemonModelViewTests.swift in Sources */,
 				F32B455F29F671BD00AA370F /* Week5SwiftUIPropertyWrappersPracticeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
