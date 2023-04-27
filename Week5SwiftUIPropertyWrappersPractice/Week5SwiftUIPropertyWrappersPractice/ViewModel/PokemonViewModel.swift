@@ -11,6 +11,8 @@ class PokemonViewModel : ObservableObject{
     
     @Published var pokemonList = [PokemonSuitableForUIWithId]()
     @Published var networkErrorEnum:NetworkErrorEnum?
+    @Published var coredataManager = CoredataManager()
+    
     var anyManager: NetworkableProtocol
     
     init(manager:NetworkableProtocol){
@@ -18,35 +20,26 @@ class PokemonViewModel : ObservableObject{
     }
     
     func getListOfPokemons(withUrlString urlString: String) async{
-        
         guard let url = URL(string: urlString) else {
             networkErrorEnum = NetworkErrorEnum.invalidUrlError
             return
         }
-        do {
-            let data = try await self.anyManager.getDataFromAPI(url: url)
-            let pokemonData = try JSONDecoder().decode(PokemonDataModel.self, from: data)
-            let pokemonList_WithId_SuitableForUI = pokemonData.data.map { pokemon in
-                PokemonSuitableForUIWithId(name: pokemon.name, id: pokemon.id, images: pokemon.images)
-            }
-            
-            self.pokemonList = pokemonList_WithId_SuitableForUI
-            
-        }catch let error{
-            switch error{
-            case let decodingError as DecodingError:
-                networkErrorEnum = .parsingError
-            case let apiError as NetworkErrorEnum:
-                networkErrorEnum = .dataNotFoundError
-            default:
-                networkErrorEnum = .dataNotFoundError
-            }
-            //            if ((error as? DecodingError) != nil) {
-            //                networkErrorEnum = .parsingError
-            //            }else {
-            //                networkErrorEnum = .dataNotFoundError
-            //            }
-            print("DEBGU: ",error.localizedDescription)
+        
+        guard let data = try? await self.anyManager.getDataFromAPI(url: url) else {
+            networkErrorEnum = NetworkErrorEnum.dataNotFoundError
+            return
         }
+        guard let pokemonData = try? JSONDecoder().decode(PokemonDataModel.self, from: data)else {
+            networkErrorEnum = NetworkErrorEnum.parsingError
+            return
+        }
+        
+        let pokemonList_WithId_SuitableForUI = pokemonData.data.map { pokemon in
+            PokemonSuitableForUIWithId(name: pokemon.name, id: pokemon.id, images: pokemon.images)
+            
+        }
+        
+        self.pokemonList = pokemonList_WithId_SuitableForUI
+        try? await coredataManager.savePokemonData(pokemons: pokemonList)
     }
 }

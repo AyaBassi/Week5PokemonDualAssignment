@@ -8,5 +8,4 @@
 import Foundation
 struct APIEndPoint{
     static let pokemonListEndPointUrl = "https://api.pokemontcg.io/v2/cards?page=1&pageSize=15"
-    
 }

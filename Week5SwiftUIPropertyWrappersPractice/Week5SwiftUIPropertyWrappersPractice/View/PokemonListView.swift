@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PokemonListView: View {
+    @StateObject var coredataManger = CoredataManager()
     @State var isNextScreenShow = false
     // another way of doing it pokemonViewModel, but needs to be delcared somewhere else, system might remove data if it gets to much(nil the value)
     //@ObservedObject var pokemonViewModel : PokemonViewModel
@@ -20,23 +21,24 @@ struct PokemonListView: View {
                 if pokemonViewModel.networkErrorEnum != nil {
                     showAlert()
                 }else {
-                    List (pokemonViewModel.pokemonList){pokemon in
+                    List (coredataManger.savedPokemonEntities){pokemon in
                         NavigationLink {
-                            PokemonDetailsPage(pokemon: pokemon)
+                            //PokemonDetailsPage(pokemon: pokemon)
                         } label: {
                             VStack(alignment: .leading){
-                                PokemonListCell(imageUrl: pokemon.images.small, name: pokemon.name)
+                                PokemonListCell(imageUrl: pokemon.smallImageUrl ?? "No Image", name: pokemon.name ?? "No name")
                             }.multilineTextAlignment(.leading)
                         }
                     }
                 }
             }.onAppear{
                 Task{
-                    await getAPIData()
+                    //await getAPIData()
+                    //coredataManger.fetchPokemons()
                 }
                 
             }.refreshable {
-                await getAPIData()
+                //await getAPIData()
             }//.padding()
         }
 //        .sheet(isPresented: $isNextScreenShow) {
