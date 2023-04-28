@@ -9,8 +9,6 @@ import CoreData
 import Foundation
 class CoredataManager : ObservableObject , CoredataOperationProtocol{
     
-    
-    
     let container : NSPersistentContainer
     
     @Published var savedPokemonEntities : [PokemonEntity] = []
@@ -24,52 +22,59 @@ class CoredataManager : ObservableObject , CoredataOperationProtocol{
                 print("DEBUG: Successfully loaded core data!")
             }
         }
-        fetchPokemons()
+         fetchPokemons()
     }
     
-    
-    
-    func fetchPokemons(){
-        let nsFetchRequest = NSFetchRequest<PokemonEntity>(entityName: "PokemonEntity")
-        do {
-            savedPokemonEntities = try container.viewContext.fetch(nsFetchRequest)
-            //print(savedPokemonEntities.count)
-        }catch let error {
-            print("Error fetching. \(error)")
-        }
-    }
-    
-    func savePokemonData(pokemons: [PokemonSuitableForUIWithId])async throws {
-        let pokemonEntity = PokemonEntity(context: container.viewContext)
+    func savePokemonData(pokemons: [PokemonSuitableForUIWithId]){
         pokemons.forEach { pokemon in
+            let pokemonEntity = PokemonEntity(context: container.viewContext)
             pokemonEntity.name = pokemon.name
             pokemonEntity.id = pokemon.id
             pokemonEntity.theId = pokemon.theId
             pokemonEntity.largeImageUrl = pokemon.images.large
             pokemonEntity.smallImageUrl = pokemon.images.small
         }
-        try? saveData()
+         saveData()
     }
     
-//    func savePokemon(pokemon:[PokemonSuitableForUIWithId]){
-//        let pokemonEntity = PokemonEntity(context: container.viewContext)
-//
-//
-////        newPokemon.name = pokemon.name
-////        newPokemon.id = pokemon.id
-////        newPokemon.theId = pokemon.theId
-////        newPokemon.largeImageUrl = pokemon.images.large
-////        newPokemon.smallImageUrl = pokemon.images.small
-//        saveData()
-//    }
-//
-    func saveData()throws{
+    func fetchPokemons()  {
+        let nsFetchRequest = NSFetchRequest<PokemonEntity>(entityName: "PokemonEntity")
+        do {
+            savedPokemonEntities = try container.viewContext.fetch(nsFetchRequest)
+            
+            print(savedPokemonEntities.count)
+        }catch let error {
+            print("Error fetching. \(error)")
+        }
+    }
+    
+    func updatePokemon(entity: PokemonEntity) {
+        let currentName = entity.name ?? ""
+        let newName = currentName + "!"
+        entity.name = newName
+        saveData()
+    }
+    
+    func deletePokemon(indexSet:IndexSet) {
+        guard let index = indexSet.first else {return}
+        let entity = savedPokemonEntities[index]
+        container.viewContext.delete(entity)
+         saveData()
+    }
+    
+    func deleteAll() {
+        savedPokemonEntities.forEach { pokemonEntity in
+            container.viewContext.delete(pokemonEntity)
+        }
+         saveData()
+    }
+    
+    func saveData()  {
         do{
             try container.viewContext.save()
-            fetchPokemons()
+             fetchPokemons()
         }catch let error {
             print("ERROR saving. \(error)")
-            throw error
         }
     }
     

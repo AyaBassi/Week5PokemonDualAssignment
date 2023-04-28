@@ -8,5 +8,8 @@
 import Foundation
 
 protocol CoredataOperationProtocol {
-    func savePokemonData(pokemons:[PokemonSuitableForUIWithId]) async throws
+    func savePokemonData(pokemons:[PokemonSuitableForUIWithId])
+    func fetchPokemons() 
+    func deletePokemon(indexSet:IndexSet)
+    func updatePokemon(entity: PokemonEntity)
 }

@@ -11,7 +11,7 @@ class PokemonViewModel : ObservableObject{
     
     @Published var pokemonList = [PokemonSuitableForUIWithId]()
     @Published var networkErrorEnum:NetworkErrorEnum?
-    @Published var coredataManager = CoredataManager()
+    //@Published var coredataManager = CoredataManager()
     
     var anyManager: NetworkableProtocol
     
@@ -19,7 +19,7 @@ class PokemonViewModel : ObservableObject{
         self.anyManager = manager
     }
     
-    func getListOfPokemons(withUrlString urlString: String) async{
+    func getListOfPokemons(withUrlString urlString: String, coredataManager:CoredataOperationProtocol) async{
         guard let url = URL(string: urlString) else {
             networkErrorEnum = NetworkErrorEnum.invalidUrlError
             return
@@ -40,6 +40,8 @@ class PokemonViewModel : ObservableObject{
         }
         
         self.pokemonList = pokemonList_WithId_SuitableForUI
-        try? await coredataManager.savePokemonData(pokemons: pokemonList)
+        
+        // add api data in core data
+        coredataManager.savePokemonData(pokemons: pokemonList)
     }
 }
